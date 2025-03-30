@@ -7,9 +7,6 @@ public class Database {
 
     private static ArrayList<Entity> entities = new ArrayList<>();
 
-//    private Database(){
-//        entities = new ArrayList<>();
-//    }
 
     private static int currentId = 1;
 
@@ -17,13 +14,15 @@ public class Database {
         if (e == null) {
             throw new IllegalArgumentException("Entity cannot be null");
         }
-        entities.add(e);
+
         e.id=currentId++;
+        entities.add(e.copy());
+
     }
     public static Entity get(int id) throws EntityNotFoundException{
         for (Entity entity : entities)
             if (entity.id == id)
-                return entity;
+                return entity.copy();
 
         throw new EntityNotFoundException (id);
     }
@@ -40,7 +39,7 @@ public class Database {
         for (int i=0; i<entities.size(); i++) {
 
             if (entities.get(i).id == e.id) {
-                entities.set(i, e);
+                entities.set(i, e.copy());
                 entityFound = true;
                 break;
             }
