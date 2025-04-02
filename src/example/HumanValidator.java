@@ -1,7 +1,8 @@
-package db;
+package example;
 
+import db.Entity;
+import db.Validator;
 import db.exception.InvalidEntityException;
-import example.Human;
 
 public class HumanValidator implements Validator {
     @Override
@@ -17,7 +18,7 @@ public class HumanValidator implements Validator {
             throw new InvalidEntityException("Human name cannot be empty.");
         }
         if (human.age < 0) {
-            throw new InvalidEntityException("Human age cannot be negative.");
+            throw new InvalidEntityException("Age must be a positive integer.");
         }
     }
 }
