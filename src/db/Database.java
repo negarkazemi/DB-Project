@@ -65,6 +65,11 @@ public class Database {
         boolean entityFound = false;
         for (int i = 0; i < entities.size(); i++) {
             if (entities.get(i).id == e.id) {
+                if (e instanceof Trackable){
+                    Trackable trackableEntity = (Trackable) e;
+                    Date now = new Date();
+                    trackableEntity.setLastModificationDate(now);
+                }
                 entities.set(i, e.copy());
                 entityFound = true;
                 break;
