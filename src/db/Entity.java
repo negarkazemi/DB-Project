@@ -6,8 +6,9 @@ public abstract class Entity {
     public Entity() {
         this.id = -1; //the default value for id
     }
-    public Entity ( int id){
-        this.id= id;
+
+    public Entity(int id) {
+        this.id = id;
     }
 
     public abstract Entity copy();

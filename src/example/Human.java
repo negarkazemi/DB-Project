@@ -7,15 +7,14 @@ public class Human extends Entity {
     public int age;
     public static final int HUMAN_ENTITY_CODE = 14;
 
+    public Human(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
 
     @Override
     public int getEntityCode() {
         return HUMAN_ENTITY_CODE;
-    }
-
-    public Human(String name, int age) {
-        this.name = name;
-        this.age = age;
     }
 
     @Override
@@ -25,5 +24,4 @@ public class Human extends Entity {
 
         return copyHuman;
     }
-    
 }
