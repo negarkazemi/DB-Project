@@ -26,7 +26,8 @@ public class Database {
         }
 
         Validator validator = validators.get(e.getEntityCode());
-        validator.validate(e);
+        if (validator != null)
+            validator.validate(e);
 
         if (e instanceof Trackable){
             Trackable trackableEntity = (Trackable) e;
@@ -60,7 +61,8 @@ public class Database {
 
     public static void update(Entity e) throws EntityNotFoundException, InvalidEntityException {
         Validator validator = validators.get(e.getEntityCode());
-        validator.validate(e);
+        if (validator !=null)
+            validator.validate(e);
 
         boolean entityFound = false;
         for (int i = 0; i < entities.size(); i++) {
