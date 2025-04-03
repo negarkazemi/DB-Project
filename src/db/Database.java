@@ -38,6 +38,7 @@ public class Database {
     public static void delete(int id) throws EntityNotFoundException{
         if (entities.remove(id-1) == null)
             throw new EntityNotFoundException();
+        entities.remove(id-1);
 
     }
 
