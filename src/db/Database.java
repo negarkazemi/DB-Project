@@ -1,5 +1,6 @@
 package db;
 import db.exception.EntityNotFoundException;
+import db.exception.InvalidEntityException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,20 +8,25 @@ import java.util.HashMap;
 public class Database {
 
     private static ArrayList<Entity> entities = new ArrayList<>();
-    private static HashMap<Integer, Validator> validators;
+    private static HashMap<Integer, Validator> validators = new HashMap<>();
 
 
     private static int currentId = 1;
 
-    public static void add(Entity e) {
+    public static void add(Entity e) throws InvalidEntityException {
+
         if (e == null) {
             throw new IllegalArgumentException("Entity cannot be null");
         }
+
+        Validator validator = validators.get(e.getEntityCode());
+        validator.validate(e);
 
         e.id=currentId++;
         entities.add(e.copy());
 
     }
+
     public static Entity get(int id) throws EntityNotFoundException{
         for (Entity entity : entities)
             if (entity.id == id)
@@ -35,7 +41,10 @@ public class Database {
 
     }
 
-    public static void update(Entity e) throws EntityNotFoundException{
+    public static void update(Entity e) throws EntityNotFoundException, InvalidEntityException{
+
+        Validator validator = validators.get(e.getEntityCode());
+        validator.validate(e);
 
         boolean entityFound = false;
         for (int i=0; i<entities.size(); i++) {
@@ -46,6 +55,7 @@ public class Database {
                 break;
             }
         }
+
         if (!entityFound)
             throw new EntityNotFoundException("Entity with ID " + e.id + " not found.");
 
