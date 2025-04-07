@@ -81,6 +81,14 @@ public class Database {
         if (!entityFound)
             throw new EntityNotFoundException("Entity with ID " + e.id + " not found.");
     }
+
+    public static Entity findById(int id) throws EntityNotFoundException {
+        for (Entity e : entities) {
+            if (e.id == id)
+                return e;
+        }
+        throw new EntityNotFoundException("Entity with ID " + id + " not found.");
+    }
 }
 
 
