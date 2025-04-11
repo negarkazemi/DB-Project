@@ -14,6 +14,10 @@ public class Database {
 
     private static int currentId = 1;
 
+    public static HashMap<Integer, Validator> getValidators() {
+        return validators;
+    }
+
     public static void registerValidator(int entityCode, Validator validator) {
         if (validators.containsKey(entityCode))
             throw new IllegalArgumentException("Validator is already registered.");
@@ -52,10 +56,9 @@ public class Database {
 
 
     public static void delete(int id) throws EntityNotFoundException {
-        if (entities.remove(id - 1) == null)
+        Entity removed = entities.remove(id - 1);
+        if (removed == null)
             throw new EntityNotFoundException();
-
-        entities.remove(id - 1);
     }
 
 
@@ -80,6 +83,25 @@ public class Database {
 
         if (!entityFound)
             throw new EntityNotFoundException("Entity with ID " + e.id + " not found.");
+    }
+
+    public static Entity findById(int id) throws EntityNotFoundException {
+        for (Entity e : entities) {
+            if (e.id == id)
+                return e;
+        }
+        throw new EntityNotFoundException("Entity with ID " + id + " not found.");
+    }
+
+    public static ArrayList<Entity> getAll(int entityCode) {
+        ArrayList<Entity> result = new ArrayList<>();
+
+        for (Entity e : entities) {
+            if (e.getEntityCode() == entityCode) {
+                result.add(e.copy());
+            }
+        }
+        return result;
     }
 }
 
