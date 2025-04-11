@@ -12,7 +12,7 @@ public class StepValidator implements Validator {
     @Override
     public void validate(Entity entity) throws InvalidEntityException {
 
-        if (!(entity instanceof Task)) {
+        if (!(entity instanceof Step)) {
             throw new IllegalArgumentException("Expected a Task entity.");
         }
 
