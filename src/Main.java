@@ -1,38 +1,80 @@
 
-import db.Database;
-import example.Document;
-import example.HumanValidator;
-import db.exception.InvalidEntityException;
-import example.Human;
+import todo.service.StepService;
+import todo.service.TaskService;
+
+import java.util.*;
+
 
 public class Main {
-    public static void main(String[] args) throws InvalidEntityException {
-        Document doc = new Document("Eid Eid Eid");
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
 
-        Database.add(doc);
+        while (true) {
+            System.out.print("Enter command: ");
+            String command = scanner.nextLine().trim();
 
-        System.out.println("Document added");
+            if (command.equalsIgnoreCase("exit")) {
+                break;
+            }
 
-        System.out.println("id: " + doc.id);
-        System.out.println("content: " + doc.content);
-        System.out.println("creation date: " + doc.getCreationDate());
-        System.out.println("last modification date: " + doc.getLastModificationDate());
-        System.out.println();
+            if (command.equalsIgnoreCase("add task")) {
+                System.out.print("Title: ");
+                String title = scanner.nextLine();
+                System.out.print("Description: ");
+                String description = scanner.nextLine();
+                System.out.print("Due date (yyyy-MM-dd): ");
+                String dateInput = scanner.nextLine();
 
-        try {
-            Thread.sleep(30_000);
-        } catch (InterruptedException e) {
-            System.out.println("Sleep interrupted!");
+                TaskService.addTask(title, description, dateInput);
+            }
+
+            if (command.equalsIgnoreCase("add step")) {
+                StepService.addStep();
+            }
+
+            if (command.equalsIgnoreCase("delete")) {
+                System.out.print("Task ID: ");
+                int taskId = scanner.nextInt();
+                scanner.nextLine();
+
+                TaskService.deleteTask(taskId);
+            }
+
+            if (command.equalsIgnoreCase("update task")) {
+                System.out.print("Task ID: ");
+                int taskId = scanner.nextInt();
+                scanner.nextLine();
+                System.out.print("Field: ");
+                String field = scanner.nextLine();
+                System.out.print("New Value: ");
+                String newValue = scanner.nextLine();
+
+                TaskService.updateTask(taskId, field, newValue);
+            }
+            if (command.equalsIgnoreCase("update step")) {
+                StepService.updateStep();
+            }
+
+            if (command.equalsIgnoreCase("get task-by-id")) {
+                System.out.print("Task ID: ");
+                int taskId = scanner.nextInt();
+                scanner.nextLine();
+
+                TaskService.getTaskById(taskId);
+            }
+
+            if (command.equalsIgnoreCase("get all-tasks")) {
+                TaskService.getAllTasks();
+            }
+
+            if (command.equalsIgnoreCase("get incomplete-tasks")) {
+                TaskService.getIncompleteTasks();
+
+            }
         }
-
-        doc.content = "This is the new content";
-
-        Database.update(doc);
-
-        System.out.println("Document updated");
-        System.out.println("id: " + doc.id);
-        System.out.println("content: " + doc.content);
-        System.out.println("creation date: " + doc.getCreationDate());
-        System.out.println("last modification date: " + doc.getLastModificationDate());
     }
 }
+
+
+
+
