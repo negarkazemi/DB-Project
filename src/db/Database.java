@@ -14,6 +14,10 @@ public class Database {
 
     private static int currentId = 1;
 
+    public static HashMap<Integer, Validator> getValidators() {
+        return validators;
+    }
+
     public static void registerValidator(int entityCode, Validator validator) {
         if (validators.containsKey(entityCode))
             throw new IllegalArgumentException("Validator is already registered.");
@@ -52,10 +56,9 @@ public class Database {
 
 
     public static void delete(int id) throws EntityNotFoundException {
-        if (entities.remove(id - 1) == null)
+        Entity removed = entities.remove(id - 1);
+        if (removed == null)
             throw new EntityNotFoundException();
-
-        entities.remove(id - 1);
     }
 
 
