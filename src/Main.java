@@ -1,4 +1,4 @@
-
+import db.Database;
 import todo.service.StepService;
 import todo.service.TaskService;
 
@@ -7,6 +7,7 @@ import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
+        Database.load();
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
@@ -14,6 +15,7 @@ public class Main {
             String command = scanner.nextLine().trim();
 
             if (command.equalsIgnoreCase("exit")) {
+                Database.save();
                 break;
             }
 
@@ -74,7 +76,3 @@ public class Main {
         }
     }
 }
-
-
-
-
